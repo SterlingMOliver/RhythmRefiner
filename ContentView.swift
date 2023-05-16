@@ -1,7 +1,8 @@
 import SwiftUI
 
-struct MetronomeView: View {
-    @ObservedObject var metronome: Metronome
+struct MainView: View {
+    @StateObject private var metronome = Metronome()
+    @StateObject private var toneGenerator = ToneGenerator()
     
     var body: some View {
         VStack {
@@ -15,6 +16,22 @@ struct MetronomeView: View {
                 }
             }) {
                 Text(self.metronome.timer == nil ? "Start" : "Stop")
+            }
+            
+            Divider()  // To separate the metronome and tone generator controls
+            
+            Text("Tone Generator")
+            
+            Button(action: {
+                self.toneGenerator.start()
+            }) {
+                Text("Start Tone")
+            }
+
+            Button(action: {
+                self.toneGenerator.stop()
+            }) {
+                Text("Stop Tone")
             }
         }
     }
